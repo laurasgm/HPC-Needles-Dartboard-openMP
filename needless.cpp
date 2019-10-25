@@ -31,8 +31,8 @@ int main(int argc, char **argv)
     double y;
 
     int iter = 10;
-
     double pi_ar[iter];
+    ScopedTimer p;
 
     for (int j = 0; j < iter; j++)
     {
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
     }
 
     err = sqrt(err);
-    cout.precision(15);
-    cout << pi << " , " << err << " , ";
+    cout.precision(10);
+    cout <<N<<","<<p.elapsed()/1e+6<<","<<pi << "," << err;
     return 0;
 }
