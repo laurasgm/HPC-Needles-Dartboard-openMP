@@ -1,0 +1,20 @@
+#!/bin/bash
+# My first script
+
+#compilamos
+#secuencial
+#g++ -o nd needless.cpp
+#openMP
+g++ -o nd needless-openMP.cpp
+
+
+#ejecutamos 
+for i in $(seq 1 31 ); do
+    
+    ./nd 100 >> datos_needless_openMP.txt
+    ./nd 10000 >> datos_needless_openMP.txt 
+    ./nd 100000 >> datos_needless_openMP.txt 
+    ./nd 1000000 >> datos_needless_openMP.txt 
+    ./nd 10000000 >> datos_needless_openMP.txt 
+    
+done 

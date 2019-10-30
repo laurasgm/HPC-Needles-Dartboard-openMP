@@ -70,6 +70,6 @@ int main(int argc, char **argv)
 
      err = sqrt(err); // ... hacer la raiz cuadrada de lo que te salga.
      cout.precision(10); // Establesco el número de digito de presicion que deseo ver en la pantalla.
-     cout <<N<<","<<p.elapsed()/1e+6<<","<<pi << "," << err;
+     cout <<N<<","<<p.elapsed()/1e+6<<","<<pi << "," << err<<endl;
      return 0; // Y listo cerramos la funcion principal con un return.
 }

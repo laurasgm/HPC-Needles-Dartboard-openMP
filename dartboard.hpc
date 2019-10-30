@@ -1,0 +1,20 @@
+#!/bin/bash
+# My first script
+
+#compilamos
+#secuencial
+#g++ -o dart dartboard.cpp
+#openMP
+g++ -o dart dartboard-openMP.cpp
+
+
+#ejecutamos 
+for i in $(seq 1 31 ); do
+    
+    ./dart 100 >> datos_dartboard_openMP.txt
+    ./dart 10000 >> datos_dartboard_openMP.txt 
+    ./dart 100000 >> datos_dartboard_openMP.txt 
+    ./dart 1000000 >> datos_dartboard_openMP.txt 
+    ./dart 10000000 >> datos_dartboard_openMP.txt 
+    
+done 

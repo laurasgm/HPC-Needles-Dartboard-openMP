@@ -60,6 +60,6 @@ int main(int argc, char **argv)
 
     err = sqrt(err);
     cout.precision(10);
-    cout <<N<<","<<p.elapsed()/1e+6<<","<<pi << "," << err;
+    cout <<N<<","<<p.elapsed()/1e+6<<","<<pi << "," << err <<endl;
     return 0;
 }
