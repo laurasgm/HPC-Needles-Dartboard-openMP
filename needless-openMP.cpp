@@ -11,6 +11,8 @@
 #include <fstream>
 #include "timer.hh"
 
+#define MAX_THREADS 8
+
 using namespace std;
 
 const double rpi = 3.1415926535897932384626433832795;
@@ -29,17 +31,23 @@ int main(int argc, char **argv)
     double y;
 
     int iter = 10;
+    int numChunks = MAX_THREADS;
+    int chunk = N / numChunks;
+    int k=0;
     double pi_ar[iter];
     ScopedTimer p;
 
     for (int j = 0; j < iter; j++)
     {
-        for (int i = 0; i < N; i++)
+        #pragma omp parallel for shared(numChunks, chunk, l) reduction(+:c) private(k, x, y)
+        for (int i = 0; i < numChunks; i++)
         {
-            x = (double)rand() / ((double)RAND_MAX * 2); //produces a random number between 0 and 0.5,
-            double alpha = ((double)rand() / (double)RAND_MAX) * rpi;
-            y = (l / 2.0) * sin(alpha);
-            c = c + (x <= y);
+            for (k = 0; k < chunk; k++) {
+                x = (double)rand() / ((double)RAND_MAX * 2); //produces a random number between 0 and 0.5,
+                double alpha = ((double)rand() / (double)RAND_MAX) * rpi;
+                y = (l / 2.0) * sin(alpha);
+                c = c + (x <= y);
+            }
         }
         pi_ar[j] = 2.0 * N / c;
         c = 0;

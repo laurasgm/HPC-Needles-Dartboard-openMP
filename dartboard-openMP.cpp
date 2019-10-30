@@ -1,10 +1,10 @@
-//PARA APRENDER MAS SOBRE ESTOS ALGORITMOS Y EL CODIGO, VISITA ESTE VIDEO >> "https://youtu.be/DQ5qqHukkAc"
 
 #include <iostream> 
 #include <cmath>    
 #include <fstream>
 #include "timer.hh"
 
+#define MAX_THREADS 8
 using namespace std; 
 
 int main(int argc, char **argv)
@@ -23,13 +23,19 @@ int main(int argc, char **argv)
      double c = 0; // Defino el número de puntos dentro del círculo (de la porción). Partimos de 0.
      int iter = 10; // iter. NÚMERO DE REPETICIONES DEL MÉTODO. Podes cambiar este número si lo deseas.
      double pi_ar[iter]; // Defino el arreglo que voy a llenar de los distintos pi's que obtenga.
-
+    
+     int numChunks = MAX_THREADS;
+     int chunk = N / numChunks;
+     int k=0;
+    
      ScopedTimer p;
      for (int j = 0; j < iter; j++)
      { //Repetirá el dardboard algorithm "iter" veces.
 
-          for (int i = 0; i < N; i++)
-          { //En cada vuelta, lanza un dardo.
+          #pragma omp parallel for shared(numChunks, chunk, l) reduction(+:c) private(k, x, y)
+        for (int i = 0; i < numChunks; i++)
+        {
+            for (k = 0; k < chunk; k++) {
 
                x = (double)rand() / (double)RAND_MAX; // Generamos dos números aleatorios desde 0 a 1. Nótese que en los siguientes
                y = (double)rand() / (double)RAND_MAX; // lanzamientos estos números serán reescritos.
@@ -42,9 +48,10 @@ int main(int argc, char **argv)
                     c++;
                }
           }
-
-          pi_ar[j] = 4 * c / N; // Calculo el pi generado en esta tanda y lo guardo en el arreglo.
-          c = 0;                // Reinicio el contador de los disparos que cayeron dentro de la circunferencia.
+        }
+          
+        pi_ar[j] = 4 * c / N; // Calculo el pi generado en esta tanda y lo guardo en el arreglo.
+        c = 0;                // Reinicio el contador de los disparos que cayeron dentro de la circunferencia.
 
      } 
 
