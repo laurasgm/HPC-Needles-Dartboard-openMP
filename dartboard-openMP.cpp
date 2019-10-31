@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 { 
      long long N; // NÚMERO DE PUNTOS ALEATORIOS A LANZAR. ¡ESTA ES LA BAINA QUE PODEMOS CAMBIAR PARA MEJORAR LA PRECISION DEL CALCULO!
      N = (argc > 1) ? atoi(argv[1]) : 100;
-     cout<<N;
+     //cout<<N;
      double r = 1; // RADIO DEL CÍRCULO: Podes cambiar este número si lo deseas; el tamaño de la circunferencia no afecta a pi.
 
      srand((unsigned)time(0)); // Aqui le estamos dando el tiempo de reloj como semilla para que nuestro PC calcule los números aleatorios
